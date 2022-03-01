@@ -1,23 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlanetCard from "./PlanetCard";
+import * as api from "../api";
 
 export default function PlanetList() {
-  const [planets, setPlanets] = useState([
-    {
-      planet_id: 1,
-      planet_name: "planet a",
-      au_from_sun: "1",
-      type: "gas",
-      moon_count: "0",
-    },
-    {
-      planet_id: 2,
-      planet_name: "planet b",
-      au_from_sun: "2",
-      type: "rock",
-      moon_count: "4",
-    },
-  ]);
+  const [planets, setPlanets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    api.fetchPlanets().then(({ planets }) => {
+      setPlanets(planets);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) return <p>loading..</p>;
   return (
     <section>
       {planets.map(({ planet_id, planet_name, type, au_from_sun }) => {
