@@ -16,7 +16,7 @@ export default function PlanetList() {
 
   if (isLoading) return <p>loading..</p>;
   return (
-    <section>
+    <section className="planet-list">
       {planets.map(({ planet_id, planet_name, type, au_from_sun }) => {
         return (
           <PlanetCard
